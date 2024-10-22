@@ -72,4 +72,16 @@ class User
 
         return $this;
     }
+
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'email' => $this->getEmail(),
+            'born_date' => $this->getBornDate()->format('Y-m-d'), // Format date if needed
+        ];
+    }
+
 }

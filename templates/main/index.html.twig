@@ -10,11 +10,11 @@
 </style>
 
 <div class="example-wrapper">
-    <!-- Add a button -->
+
     <button id="myButton" class="button-style">Click me</button>
 
-    <!-- Placeholder for the jQuery response -->
     <p id="response"></p>
+
 </div>
 {% endblock %}
 
@@ -22,11 +22,23 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
+  <script>
         $(document).ready(function() {
+            // Convert users data to JSON and assign it to a JavaScript variable
+            const users = {{ users|json_encode|raw }};
+
+
             // Add a click event listener to the button
             $('#myButton').on('click', function() {
-                $('#response').text('Button clicked! 🎉');
+                // Check if users exist
+                if (users.length > 0) {
+                    // Display users in the response paragraph
+
+                    const userInfo = users.map(user => `Name: ${user.name}, Email: ${user.email}`).join('<br>');
+                    $('#response').html('Users:<br>' + userInfo);
+                } else {
+                    $('#response').text('No users found.');
+                }
             });
         });
     </script>
