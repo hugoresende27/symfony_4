@@ -7,13 +7,32 @@
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     .button-style { background-color: #4CAF50; color: white; padding: 10px 20px; border: none; cursor: pointer; }
+    .delete-button { background-color: #f44336; } /* Red color for delete button */
 </style>
 
 <div class="example-wrapper">
+  <!-- User List -->
+    <div id="userList">
+        <!-- This will be filled by jQuery -->
+    </div>
 
-    <button id="myButton" class="button-style">Click me</button>
+    <button id="loadUsers" class="button-style">Load Users</button>
 
-    <p id="response"></p>
+
+    <hr>
+    <!-- Table for DataTables -->
+    <table id="usersTable" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Born</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- This will be filled by jQuery -->
+        </tbody>
+    </table>
 
 </div>
 {% endblock %}
@@ -22,24 +41,76 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
   <script>
         $(document).ready(function() {
+
             // Convert users data to JSON and assign it to a JavaScript variable
             const users = {{ users|json_encode|raw }};
 
+            // Initialize DataTable
+            const dataTable = $('#usersTable').DataTable();
 
             // Add a click event listener to the button
-            $('#myButton').on('click', function() {
+            $('#loadUsers').on('click', function() {
+
+                // Clear the DataTable before populating it
+                dataTable.clear();
+           
                 // Check if users exist
                 if (users.length > 0) {
                     // Display users in the response paragraph
+                    const userInfo = users.map(user => `
+                                        Name: ${user.name} - Email: ${user.email} 
+                                        <button class="delete-button" data-id="${user.id}"> DELETE </button>
+                                        <br>
+                                    `).join('');
 
-                    const userInfo = users.map(user => `Name: ${user.name}, Email: ${user.email}`).join('<br>');
-                    $('#response').html('Users:<br>' + userInfo);
+
+                    $('#userList').html(userInfo );
+
+
+
+                    // Event delegation for delete buttons
+                    $('#userList').on('click', '.delete-button', function() {
+                        const userId = $(this).data('id'); // Get user ID from data attribute
+
+                        // Perform an AJAX DELETE request to delete the user
+                        $.ajax({
+                            url: `/user/${userId}`, // Adjust the URL according to your routing
+                            type: 'DELETE',
+                            success: function(response) {
+                                console.log(response, 'deleted'); // Handle success response
+                                // Remove the deleted user's element from the list
+                                $(this).closest('div').remove(); // Remove the user info from the list
+                            }.bind(this), // Ensure 'this' refers to the button clicked
+                            error: function(xhr, status, error) {
+                                console.error('Error deleting user:', error); // Handle error response
+                            }
+                        });
+                    });
+                    
+
+                    // Populate the DataTable
+                    users.forEach(user => {
+                        dataTable.row.add([
+                            user.name,
+                            user.email,
+                            user.born_date
+                        ]);
+                    });
+
+                    // Draw the DataTable after adding rows
+                    dataTable.draw();
                 } else {
                     $('#response').text('No users found.');
+                    dataTable.row.add(['No users found.', '']).draw(); // Add a row to indicate no users found
                 }
             });
+
+
         });
     </script>
 {% endblock %}
