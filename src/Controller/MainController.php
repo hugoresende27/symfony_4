@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,8 +35,18 @@ class MainController extends AbstractController
     /**
      * @Route("/user/{id}", methods={"DELETE"}, name="delete_user")
      */
-    public function deleteUser(Request $request, $id): void
+    public function deleteUser(Request $request, $id): JsonResponse
     {
-        $this->userRepository->remove($id);
+        $user = $this->userRepository->find($id);
+        if (!is_null($user)) {
+            $this->userRepository->remove($user ) ;
+
+            // Return a success response
+            return new JsonResponse(['status' => 'success', 'message' => 'User deleted successfully'], 200);
+        }
+
+    // Return an error response if the user was not found
+    return new JsonResponse(['status' => 'error', 'message' => 'User not found'], 404);
+
     }
 }
