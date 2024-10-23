@@ -17,7 +17,7 @@ class UserFixtures extends Fixture
         $faker = Factory::create();
 
         // Create 10 user entries
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $user = new User();
             $user->setName($faker->userName());
             $user->setEmail ($faker->email());
