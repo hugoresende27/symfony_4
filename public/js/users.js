@@ -6,17 +6,24 @@ $(document).ready(function() {
 
     // Check if users exist
     if (users.length > 0) {
+
+        
     
         // Initialize DataTable
         const dataTable = $('#usersTable').DataTable({
             
-            dom: '<"top"p>rt<"bottom"p><"clear">',
+            // dom: '<"top"p>rt<"bottom"p><"clear">',
+            dom: '<"top"p>rt<"clear">',
             // Additional configuration for DataTables...
         });
 
+        // Hide the DataTable wrapper (table + pagination) initially
+        $('#usersTable_wrapper').hide();
 
-        // Add a click event listener to the button
         $('#loadUsers').on('click', function() {
+
+            $('#usersTable').removeClass('d-block').addClass('d-none');
+            $('#usersTable_wrapper').hide();
 
             if ($('#userList').hasClass('d-block')) {
                 
@@ -25,7 +32,7 @@ $(document).ready(function() {
                 $('#userList').removeClass('d-none').addClass('d-block');
 
             }
-    
+
     
             // Display users in the response paragraph
             const userInfo = users.map(user => `
@@ -64,21 +71,23 @@ $(document).ready(function() {
                 });
             });
 
-
-
-
-            
-
-        
         });
 
+
+
         $('#loadUsersTable').on('click', function() {
+
+            $('#userList').removeClass('d-block').addClass('d-none');
+
+            // Show the DataTable wrapper on button click
+            $('#usersTable_wrapper').show();
 
             // Clear the DataTable before populating it
             dataTable.clear();
     
             if ($('#usersTable').hasClass('d-block')) {
-                
+                dataTable.clear();
+                $('#usersTable_wrapper').hide();
                 $('#usersTable').removeClass('d-block').addClass('d-none');
             } else {
                 $('#usersTable').removeClass('d-none').addClass('d-block');

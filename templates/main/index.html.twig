@@ -11,39 +11,26 @@
 </style>
 
 <div class="example-wrapper">
-  <!-- User List -->
-
-    <button id="loadUsers" class="button-style">List</button>
-    <button id="loadUsersTable" class="button-style">Table</button>
 
 
-    <div id="userList">
-        <!-- This will be filled by jQuery -->
+    <div class="p-3 m-3">
+        <button id="btnUsers" class="button-style">Users</button>
+        <button id="btnBitcoin" class="button-style">Bitcoin</button>
     </div>
 
+    <!-- Upper List with Buttons -->
+    <div class="d-flex justify-content-start p-3">
+        <button id="loadUsers" class="button-style d-none me-2">List</button>
+        <button id="loadUsersTable" class="button-style d-none">Table</button>
+    </div>
 
-
+    <!-- Include user list -->
+    {% include 'partials/user_list.html.twig' %}
 
     <hr>
 
-    {% if (users|length  > 0) %}
-
-        <!-- Table for DataTables -->
-        <table id="usersTable" class="display" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Born</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- This will be filled by jQuery -->
-            </tbody>
-        </table>
-
-    {% endif %}
+    <!-- Include user table -->
+    {% include 'partials/user_table.html.twig' %}
 
 
 </div>
@@ -60,6 +47,6 @@
         const users = {{ users|json_encode|raw }};
     </script>
 
-    <script src={{ asset('js/users.js') }}></script>
+
 
 {% endblock %}

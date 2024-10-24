@@ -1,0 +1,15 @@
+{% if (users|length  > 0) %}
+    <table id="usersTable" class="display table d-none" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Born</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- This will be filled by jQuery -->
+        </tbody>
+    </table>
+{% endif %}

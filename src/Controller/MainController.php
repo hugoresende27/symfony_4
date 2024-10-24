@@ -45,8 +45,10 @@ class MainController extends AbstractController
             return new JsonResponse(['status' => 'success', 'message' => 'User deleted successfully'], 200);
         }
 
-    // Return an error response if the user was not found
-    return new JsonResponse(['status' => 'error', 'message' => 'User not found'], 404);
+        // Return an error response if the user was not found
+        return new JsonResponse(['status' => 'error', 'message' => 'User not found'], 404);
 
     }
+
+
 }
