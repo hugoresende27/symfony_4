@@ -1,0 +1,24 @@
+framework:
+    messenger:
+        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
+        # failure_transport: failed
+
+        transports:
+            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            # failed: 'doctrine://default?queue_name=failed'
+            # sync: 'sync://'
+
+            enqueue: # Name of the transport
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+
+            # amqp:
+            #     dsn: 'amqp://guest:guest@rabbitmq:5672/%2f'
+                # options:
+                #     exchange:
+                        # name: 'your_exchange_name'
+        routing:
+            # Route your messages to the transports
+            # 'App\Message\YourMessage': async
+            # 'App\Message\YourMessageClass': amqp
+            'App\Message\BitcoinMessage': enqueue
