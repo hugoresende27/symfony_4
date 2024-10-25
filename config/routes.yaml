@@ -13,3 +13,9 @@ api_bitcoin_history:
     path:       /api/bitcoin/history
     controller: App\Controller\API\BitcoinAPIController::getBitcoinValuesHistory
     methods:    GET|HEAD
+
+
+api_bitcoin_message:
+    path:       /api/bitcoin/message
+    controller: App\Controller\API\BitcoinAPIController::bitcoinMessage
+    methods:    GET|HEAD

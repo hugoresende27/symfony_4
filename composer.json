@@ -14,7 +14,9 @@
         "enqueue/amqp-lib": "^0.10.19",
         "fakerphp/faker": "^1.23",
         "nelmio/cors-bundle": "^2.3",
+        "php-amqplib/php-amqplib": "^3.7",
         "phpdocumentor/reflection-docblock": "^5.4",
+        "psr/log": "^2.0",
         "symfony/asset": "4.4.*",
         "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",
@@ -30,7 +32,8 @@
         "symfony/validator": "4.4.*",
         "symfony/yaml": "4.4.*",
         "twig/extra-bundle": "^2.12|^3.0",
-        "twig/twig": "^3.14"
+        "twig/twig": "^3.14",
+        "symfony/monolog-bundle": "^3.10"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",

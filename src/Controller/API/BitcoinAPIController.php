@@ -5,21 +5,39 @@ namespace App\Controller\API;
 
 
 use App\Entity\Bitcoin;
+use App\Message\BitcoinMessage;
 use App\Repository\BitcoinRepository;
 use App\Services\Web\BpiAPI;
 use DateTimeImmutable;
 use Exception;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+/**
+ * Summary of BitcoinAPIController
+ * routes in config/routes.yaml
+ */
 class BitcoinAPIController
 {
 
     public function __construct(
         protected BpiAPI $api, 
-        protected BitcoinRepository $repository)
+        protected BitcoinRepository $repository,
+        private MessageBusInterface $message,
+        private LoggerInterface $logger)
     {
 
+    }
+
+    public function bitcoinMessage(): JsonResponse
+    {
+        $this->logger->info('bitcoinMessage');
+        $data = new BitcoinMessage('TESTING');
+        $this->message->dispatch($data);
+        return new JsonResponse(['status' => 'Message sent!']);
     }
 
 
@@ -27,8 +45,6 @@ class BitcoinAPIController
     public function bitcoin(): JsonResponse
     {
         $bitcoinData = $this->api->getBitcoinValue();
-
-     
 
         $updatedTime = $bitcoinData['time']['updated']; // Example: "Oct 24, 2024 20:21:20 UTC"
 

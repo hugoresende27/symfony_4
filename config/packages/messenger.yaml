@@ -9,7 +9,7 @@ framework:
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
-            enqueue: # Name of the transport
+            amqp: # Name of the transport
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
 
             # amqp:
@@ -21,4 +21,4 @@ framework:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             # 'App\Message\YourMessageClass': amqp
-            'App\Message\BitcoinMessage': enqueue
+            'App\Message\BitcoinMessage': amqp

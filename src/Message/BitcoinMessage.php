@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-class BitcoinMessage
+class BitcoinMessage 
 {
     private string $data;
 
@@ -11,7 +11,12 @@ class BitcoinMessage
         $this->data = $data;
     }
 
-    public function getData(): string
+    public function getData(): self
+    {
+        return $this;
+    }
+
+    public function __toString()
     {
         return $this->data;
     }

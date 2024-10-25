@@ -5,13 +5,14 @@ namespace App\Message;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 
 
 /**
  * @AsMessageHandler
  */
-class BitcoinMessageHandler
+class BitcoinMessageHandler implements MessageHandlerInterface
 {
     private LoggerInterface $logger;
 
@@ -20,12 +21,19 @@ class BitcoinMessageHandler
         $this->logger = $logger;
     }
 
-    public function __invoke(string $message)
+    public function __invoke(BitcoinMessage $message)
     {
         // Process the message
-        $this->logger->info('Processing Bitcoin message: ' . $message);
+        $this->logger->info('Processing Bitcoin message: ' . $message->__toString());
 
-        // Add your business logic here
+        try {
+            echo $message->__toString();
+        } catch (\Throwable $e) {
+            // Log the error or handle it
+            error_log($e->getMessage());
+            throw $e; // Rethrow if you want to nack the message
+        }
+  
     }
 
 
