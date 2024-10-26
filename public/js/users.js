@@ -7,8 +7,7 @@ $(document).ready(function() {
     // Check if users exist
     if (users.length > 0) {
 
-        
-    
+     
         // Initialize DataTable
         const dataTable = $('#usersTable').DataTable({
             
@@ -21,7 +20,7 @@ $(document).ready(function() {
         $('#usersTable_wrapper').hide();
 
         $('#loadUsers').on('click', function() {
-
+    
             $('#usersTable').removeClass('d-block').addClass('d-none');
             $('#usersTable_wrapper').hide();
 

@@ -3,6 +3,7 @@
 
 namespace App\Message;
 
+use App\Controller\API\BitcoinAPIController;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
@@ -14,11 +15,14 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
  */
 class BitcoinMessageHandler implements MessageHandlerInterface
 {
-    private LoggerInterface $logger;
 
-    public function __construct(LoggerInterface $logger)
+
+    public function __construct(
+        protected LoggerInterface $logger,
+        protected BitcoinAPIController $apiController
+        )
     {
-        $this->logger = $logger;
+
     }
 
     public function __invoke(BitcoinMessage $message)
@@ -27,6 +31,7 @@ class BitcoinMessageHandler implements MessageHandlerInterface
         $this->logger->info('Processing Bitcoin message: ' . $message->__toString());
 
         try {
+            $this->apiController->bitcoin();
             echo $message->__toString();
         } catch (\Throwable $e) {
             // Log the error or handle it

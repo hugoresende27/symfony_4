@@ -35,9 +35,9 @@ class BitcoinAPIController
     public function bitcoinMessage(): JsonResponse
     {
         $this->logger->info('bitcoinMessage');
-        $data = new BitcoinMessage('TESTING');
+        $data = new BitcoinMessage('updating bitcoin ...');
         $this->message->dispatch($data);
-        return new JsonResponse(['status' => 'Message sent!']);
+        return new JsonResponse(['status' => 'updated bitcoin value!']);
     }
 
 

@@ -1,8 +1,9 @@
 $(document).ready(function() {
-    console.log('header script');
+  
 
     $('#btnUsers').on('click', function() {
 
+        console.log('header script');
         if ($('#loadUsers').hasClass('d-none')) {        
             $('#loadUsers').removeClass('d-none').addClass('d-block');
         } else {
@@ -19,26 +20,13 @@ $(document).ready(function() {
             $('#usersTable').removeClass('d-block').addClass('d-none');
         }
 
-
-
-    });
-
-
-    $('#btnBitcoin').on('click', function() {
-
-        if ($('#loadUsers').hasClass('d-block')) {        
-            $('#loadUsers').removeClass('d-block').addClass('d-none');
-            $('#userList').removeClass('d-block').addClass('d-none');
-        } 
-
-
-        if ($('#loadUsersTable').hasClass('d-block')) {        
-            $('#loadUsersTable').removeClass('d-block').addClass('d-none');
-            $('#usersTable_wrapper').hide();
-            $('#usersTable').removeClass('d-block').addClass('d-none');
+        
+        if ($('#bitcoinHistoryList').hasClass('d-block')) {        
+            $('#bitcoinHistoryList').removeClass('d-block').addClass('d-none');
         } 
 
 
     });
+
 
 });

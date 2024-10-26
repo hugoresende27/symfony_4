@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install -y \
     git \
     wget \
     && docker-php-ext-install intl pdo pdo_mysql opcache zip pdo_sqlite bcmath sockets \
-    && pecl install amqp \
+    && pecl install amqp-1.11.0 \
     && docker-php-ext-enable amqp \
     && rm -rf /var/lib/apt/lists/*
 
