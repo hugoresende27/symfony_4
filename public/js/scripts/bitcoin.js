@@ -47,11 +47,11 @@ $(document).ready(function() {
                 type: 'GET',
                 success: function(response) {
                     console.log("Message sent successfully"); // Add logging for debugging
-                    // populateTable();
+                    populateTable();
                 }
             });
 
-  
+    
     });
 
 
@@ -120,7 +120,8 @@ $(document).ready(function() {
                 { width: '20%', targets: 3 }
             ]
         });
-
+        dataTable.clear();
+    
 
         $.ajax({
             url: `/api/bitcoin/history`, 
@@ -149,7 +150,8 @@ $(document).ready(function() {
                       
                     // Draw the DataTable after adding rows
                     dataTable.draw();
-                    
+                    // Make the table visible
+                    $('#bitcoinHistoryTable').addClass('d-block').removeClass('d-none');
                     
                 }.bind(this), // Ensure 'this' refers to the button clicked
                 error: function(xhr, status, error) {
@@ -158,7 +160,7 @@ $(document).ready(function() {
         });
 
 
-     
+
 
     }
 });
