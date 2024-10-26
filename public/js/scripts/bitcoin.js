@@ -4,12 +4,13 @@ $(document).ready(function() {
     $('#btnBitcoin').on('click', function() {
 
         if ($('#bitcoinHistoryList').hasClass('d-block')) {
-                
             $('#bitcoinHistoryList').removeClass('d-block').addClass('d-none');
         } else {
             $('#bitcoinHistoryList').removeClass('d-none').addClass('d-block');
-
         }
+
+        // // Toggle the bitcoin history list
+        // $('#bitcoinHistoryList').toggleClass('d-none d-block');
 
         if ($('#loadUsers').hasClass('d-block')) {        
             $('#loadUsers').removeClass('d-block').addClass('d-none');
@@ -23,6 +24,40 @@ $(document).ready(function() {
             $('#usersTable').removeClass('d-block').addClass('d-none');
         } 
 
+        if ($('#callBitcoin').hasClass('d-none')) {
+            $('#callBitcoin').removeClass('d-none').addClass('d-block');
+        } else {
+            $('#callBitcoin').removeClass('d-block').addClass('d-none');
+
+        }
+
+        // Toggle the callBitcoin button visibility
+        // $('#callBitcoin').toggleClass('d-none d-block');
+
+        populateTable();
+
+    })
+
+
+    $('#callBitcoin').on('click', function() {
+
+              // Perform an AJAX 
+              $.ajax({
+                url: `/api/bitcoin/message`, 
+                type: 'GET',
+                success: function(response) {
+                    console.log("Message sent successfully"); // Add logging for debugging
+                    populateTable();
+                }
+            });
+
+  
+    });
+
+
+    function populateTable()
+    {
+        $('#bitcoinHistoryList').html(''); // Clear all content
         // Perform an AJAX 
         $.ajax({
             url: `/api/bitcoin/history`, 
@@ -39,9 +74,9 @@ $(document).ready(function() {
                         const gbpFormatted = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(item.GBP);
                         
                         htmlContent += `<li style="list-style:none; color:white; font-weight:bolder" class="m-1">
-                                            <span class='bg-warning p-1 m-1 rounded'> Date: ${item.created_at} </span> - 
+                                            <span class='bg-dark p-1 m-1 rounded'> Date: ${item.created_at} </span> - 
                                             <span class='bg-success p-1 m-1 rounded'> EUR: ${eurFormatted} </span> - 
-                                            <span class='bg-info p-1 m-1 rounded'> USD: ${usdFormatted} </span> - 
+                                            <span class='bg-secondary p-1 m-1 rounded'> USD: ${usdFormatted} </span> - 
                                             <span class='bg-primary p-1 m-1 rounded'> GBP: ${gbpFormatted} </span>
                                         </li>`;
 
@@ -59,6 +94,5 @@ $(document).ready(function() {
                     console.error('Error ', error); 
                 }
         });
-
-    })
+    }
 });

@@ -73,7 +73,7 @@ class BitcoinAPIController
 
     public function getBitcoinValuesHistory(): JsonResponse
     {
-        $bitcoins = $this->repository->findAll();
+        $bitcoins = $this->repository->findAllOrderedByCreatedAtDesc();
 
         return new JsonResponse($bitcoins);
     }

@@ -3,7 +3,7 @@ $(document).ready(function() {
 
     $('#btnUsers').on('click', function() {
 
-        console.log('header script');
+       
         if ($('#loadUsers').hasClass('d-none')) {        
             $('#loadUsers').removeClass('d-none').addClass('d-block');
         } else {
@@ -23,6 +23,7 @@ $(document).ready(function() {
         
         if ($('#bitcoinHistoryList').hasClass('d-block')) {        
             $('#bitcoinHistoryList').removeClass('d-block').addClass('d-none');
+            $('#callBitcoin').removeClass('d-block').addClass('d-none');
         } 
 
 

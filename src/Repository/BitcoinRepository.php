@@ -47,6 +47,15 @@ class BitcoinRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function findAllOrderedByCreatedAtDesc()
+    {
+        return $this->createQueryBuilder('b')
+            ->orderBy('b.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Bitcoin[] Returns an array of Bitcoin objects
     //  */
